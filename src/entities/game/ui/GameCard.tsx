@@ -1,16 +1,30 @@
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 interface GameCardProps {
+  id: number;
   title: string;
   thumbnail: string;
   genre: string;
   actionSlot?: ReactNode;
 }
 
-const GameCard = ({ title, thumbnail, genre, actionSlot }: GameCardProps) => {
+const GameCard = ({
+  id,
+  title,
+  thumbnail,
+  genre,
+  actionSlot,
+}: GameCardProps) => {
   return (
     <div className="bg-[#111] border border-white/10 rounded-md overflow-hidden flex flex-col hover:border-[#00d4ff]/50 transition-colors duration-300">
-      <img src={thumbnail} alt={title} className="w-full h-full object-cover" />
+      <Link to={`/game/${id}`}>
+        <img
+          src={thumbnail}
+          alt={title}
+          className="w-full h-full object-cover"
+        />
+      </Link>
 
       <div className="p-4 flex flex-col gap-2">
         <div className="">
@@ -19,9 +33,11 @@ const GameCard = ({ title, thumbnail, genre, actionSlot }: GameCardProps) => {
           </span>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <h3 className="text-white font-orbitron font-semibold text-[14px] truncate">
-            {title}
-          </h3>
+          <Link to={`/game/${id}`}>
+            <h3 className="text-white font-orbitron font-semibold text-[14px] truncate">
+              {title}
+            </h3>
+          </Link>
           {actionSlot}
         </div>
       </div>

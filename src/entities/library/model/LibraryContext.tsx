@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { Game } from "../../game/types/index";
 
 interface LibraryContextType {
-  savedGame: Game[];
+  savedGames: Game[];
   addGame: (game: Game) => void;
   removeGame: (gameId: number) => void;
   isGameSaved: (gameId: number) => boolean;
@@ -12,25 +12,25 @@ interface LibraryContextType {
 const LibraryContext = createContext<LibraryContextType | undefined>(undefined);
 
 export const LibraryProvider = ({ children }: { children: ReactNode }) => {
-  const [savedGame, setSavedGames] = useState<Game[]>([]);
+  const [savedGames, setSavedGames] = useState<Game[]>([]);
 
   const addGame = (game: Game) => {
-    if (!savedGame.find((g) => g.id === game.id)) {
-      setSavedGames([...savedGame, game]);
+    if (!savedGames.some((g) => g.id === game.id)) {
+      setSavedGames((prev) => [...prev, game]);
     }
   };
 
   const removeGame = (gameId: number) => {
-    setSavedGames(savedGame.filter((g) => g.id !== gameId));
+    setSavedGames(savedGames.filter((g) => g.id !== gameId));
   };
 
   const isGameSaved = (gameId: number) => {
-    return savedGame.some((g) => g.id === gameId);
+    return savedGames.some((g) => g.id === gameId);
   };
 
   return (
     <LibraryContext.Provider
-      value={{ savedGame, addGame, removeGame, isGameSaved }}
+      value={{ savedGames, addGame, removeGame, isGameSaved }}
     >
       {children}
     </LibraryContext.Provider>

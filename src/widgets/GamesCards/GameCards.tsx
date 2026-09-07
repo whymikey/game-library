@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import fetchGames from "../../entities/game/api/GameApi";
+import { fetchGames } from "../../entities/game/api/GameApi";
 import GameCard from "../../entities/game/ui/GameCard";
 import type { Game } from "../../entities/game/types";
 import AddToLibraryButton from "../../features/library-control/ui/AddToLibraryButton";
@@ -28,8 +28,7 @@ const GameCards = () => {
   }, []);
 
   useEffect(() => {
-
-    if (isLoading) return
+    if (isLoading) return;
 
     const observer = new IntersectionObserver((entries) => {
       const target = entries[0];
@@ -66,6 +65,7 @@ const GameCards = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
         {visibleGames.map((game) => (
           <GameCard
+            id={game.id}
             key={game.id}
             title={game.title}
             thumbnail={game.thumbnail}
